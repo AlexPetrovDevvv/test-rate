@@ -1,25 +1,25 @@
 const routes = {
-    big: '/data/Top100BigChannels.json',
-    involved: '/data/Top100ChannelsInvolved.json',
-    cited: '/data/top100CitedChannels.json'
+    big: '/data/t50PersChannelsBig.json',
+    involved: '/data/t50PersChannelsInvolved.json',
+    cited: '/data/t50PersChannelsCitited.json'
 }
 
 
-async function getBigCannels() {
+async function getPersBigCannels() {
     const response = await fetch(routes.big)
     const data = await response.json()
     return data
 }
 
 
-async function getInvolvedCannels() {
+async function getPersInvolvedCannels() {
     const response = await fetch(routes.involved)
     const data = await response.json()
     return data
 }
 
 
-async function getCitedCannels() {
+async function getPersCitedCannels() {
     const response = await fetch(routes.cited)
     const data = await response.json()
     return data
@@ -27,4 +27,4 @@ async function getCitedCannels() {
 
 
 
-export { getBigCannels, getInvolvedCannels, getCitedCannels }
+export { getPersBigCannels, getPersInvolvedCannels, getPersCitedCannels }

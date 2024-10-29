@@ -35,4 +35,13 @@ const nominations = computed(() => {
 
 <style lang="sass">
 
+.nominations-filter
+    display: flex
+    gap: 20px
+    & select
+        display: block
+        padding: 10px 15px
+    & option
+        padding: 10px 15px
+
 </style>

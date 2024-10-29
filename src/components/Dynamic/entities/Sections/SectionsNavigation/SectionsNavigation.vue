@@ -4,24 +4,38 @@
 
 <script setup>
 import TabList from '@/components/Dynamic/shared/Tabs/TabList/TabList.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import {usePageStore} from '../../../store/page.js';
+
+const pageStore = usePageStore()
 
 const valueList = [
     {
-        value: 'nominations',
+        value: 'Номинации',
         label: 'Номинации'
     },
     {
-        value: 'survey',
+        value: 'Опрос',
         label: 'Опрос'
     },
     {
-        value: 'research',
+        value: 'Исследование',
         label: 'Исследование'
     },
 ]
 
-const section = ref('nominations')
+const section = ref('Номинации')
+
+watch(() => pageStore.pageState.pageTitle, () => {
+    if(pageStore.pageState.pageTitle === '') {
+        section.value = 'Номинации'
+    }
+})
+
+watch(section, () => {
+    pageStore.setPageTitle(section.value)
+})
+
 
 
 </script>

@@ -4,12 +4,14 @@ import { ref, reactive, computed } from "vue"
 export const usePageStore = defineStore('page', () => {
     const pageState = reactive({
         year: '',
-        pageTitle: '',
+        pageTitle: 'Номинации',
+        feauters: 'table'
     })
 
     function clearPage() {
         pageState.year = ''
         pageState.pageTitle = ''
+        pageState.feauters = 'table'
     }
 
     function setPageYear(year) {
@@ -20,5 +22,9 @@ export const usePageStore = defineStore('page', () => {
         pageState.pageTitle = title
     }
 
-    return { pageState, clearPage, setPageYear, setPageTitle }
+    function setPageFeauters(feauters) {
+        pageState.feauters = feauters
+    }
+
+    return { pageState, clearPage, setPageYear, setPageTitle, setPageFeauters }
   })

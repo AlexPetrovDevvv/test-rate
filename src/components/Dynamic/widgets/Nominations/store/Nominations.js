@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { ref, reactive, shallowReactive } from "vue"
-import { topApi } from "@/components/Dynamic/api"
+import { nominationApi } from "@/components/Dynamic/api"
 
 export const useNominationsStore = defineStore('Nominations', () => {
     const NominationsFilterState = reactive({
@@ -8,23 +8,72 @@ export const useNominationsStore = defineStore('Nominations', () => {
         nomination: '',
     })
 
-    const valueList = reactive([]);
-    const titleList = reactive([]);
-    const titleValueList = reactive([]);
-    const content = ref('')
+    const fullValueList = ref([]);
+    const valueList = ref([]);
+    const titleList = ref([]);
+    const titleValueList = ref([]);
+    const content = ref('');
 
-    async function getNominations(params) {
-        const data = await topApi(params)
-        console.log(data)
-        // Изменяем содержимое массивов
-        titleList.splice(0, titleList.length, ...data.columns)
-        valueList.splice(0, valueList.length, ...data.participants)
-        titleValueList.splice(0, titleValueList.length, ...data.titleList)
-        console.log('titleList:',titleList)
-        console.log('valueList:',valueList)
-        console.log('titleValueList:',titleValueList)
-        // Обновляем content
-        content.value = data.content
+    const currentIndex = ref(0);
+    const pageSize = 20;
+    const hasMore = ref(true);
+    const isLoading = ref(false);
+    const errorMessage = ref('');
+
+    async function getNominations() {
+        // Сброс состояния при новом запросе
+        fullValueList.value = [];
+        valueList.value = [];
+        currentIndex.value = 0;
+        hasMore.value = true;
+        errorMessage.value = '';
+
+        const { category, nomination } = NominationsFilterState;
+
+        const params = `${category}: ${nomination}`
+
+        try {
+            isLoading.value = true;
+            const data = await nominationApi(params);
+            if (data) {
+                // Устанавливаем заголовки и содержимое
+                titleList.value = data.columns || [];
+                titleValueList.value = data.titleList || [];
+                content.value = data.content || '';
+
+                if (data.participants && data.participants.length > 0) {
+                    fullValueList.value = data.participants;
+                    loadMoreItems(); // Загружаем первую порцию данных
+                } else {
+                    hasMore.value = false;
+                }
+            } else {
+                hasMore.value = false;
+            }
+        } catch (error) {
+            console.error('Ошибка при получении данных:', error);
+            errorMessage.value = 'Не удалось загрузить данные.';
+            hasMore.value = false;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    function loadMoreItems() {
+        // Загружаем следующую порцию данных
+
+        if (!hasMore.value) return;
+        console.log("load")
+        const nextIndex = currentIndex.value + pageSize;
+        const items = fullValueList.value.slice(currentIndex.value, nextIndex);
+        valueList.value.push(...items);
+        console.log('valueList:', valueList.value)
+        currentIndex.value = nextIndex;
+
+        // Проверяем, есть ли еще данные для загрузки
+        if (currentIndex.value >= fullValueList.value.length) {
+            hasMore.value = false;
+        }
     }
 
     return {
@@ -33,6 +82,10 @@ export const useNominationsStore = defineStore('Nominations', () => {
         titleList,
         titleValueList,
         content,
-        getNominations
+        hasMore,
+        isLoading,
+        errorMessage,
+        getNominations,
+        loadMoreItems
     }
 })
