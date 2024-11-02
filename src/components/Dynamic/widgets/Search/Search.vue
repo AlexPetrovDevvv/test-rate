@@ -1,9 +1,5 @@
 <template>
     <section class="search">
-        <div class="search__input-box">
-            <input type="text" class="search__input" v-model="search">
-            <button class="search__button" @click="searchParticipant">Поиск</button>
-        </div>
         <ul class="search__list" v-if="searchStore.searchState.list.length !== 0">
             <li class="search__item" v-for="(item, index) in searchStore.searchState.list" :key="index">
                     <h3 class="search__item-title">{{ item.title }}</h3>
@@ -19,11 +15,6 @@
     import { useSearchStore } from './store/Search';
 
     const searchStore = useSearchStore()
-    const search = ref('')
-
-    function searchParticipant() {
-        searchStore.getSearch(search.value)
-    }
 
 </script>
 

@@ -1,6 +1,5 @@
 <template>
     <section class="nominations">
-        <nominations-filter v-model:category="nominationsStore.NominationsFilterState.category" v-model:nomination="nominationsStore.NominationsFilterState.nomination " :categories="categoryList" :nominationsList="nominationList"/>
         <div class="nomination" v-if="nominationsStore.NominationsFilterState.category !== '' && nominationsStore.NominationsFilterState.nomination !== ''">
             <h3 class="nomination__title">{{ nominationsStore.NominationsFilterState.category }}: {{ nominationsStore.NominationsFilterState.nomination }}</h3>
             <div class="nominations__description-wrapper" v-if="nominationsStore.content !== ''" v-html="nominationsStore.content"></div>
@@ -14,7 +13,6 @@
 <script setup>
 import { ref, onMounted, watch, toRef } from 'vue';
 import NominationsTable from '../../entities/Nominations/NominationsTable/nominationsTable.vue';
-import NominationsFilter from '../../feauters/Nominations/NominationsFilter/NominationsFilter.vue';
 import { useNominationsStore } from './store/Nominations.js';
 
 const props = defineProps({
@@ -30,10 +28,6 @@ const props = defineProps({
 
 const nominationsStore = useNominationsStore()
 
-watch(() => nominationsStore.NominationsFilterState, () => {
-  console.log('Nomination changed in store:', nominationsStore.NominationsFilterState.nomination);
-  nominationsStore.getNominations();
-}, {deep: true});
 
 </script>
 

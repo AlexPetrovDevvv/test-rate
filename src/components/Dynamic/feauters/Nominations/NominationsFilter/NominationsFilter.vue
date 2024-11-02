@@ -1,9 +1,11 @@
 <template>
     <div class="nominations-filter">
         <select name="category" v-model="category">
+            <option value="" selected disabled>Выберите категорию</option>
             <option v-for="(item, index) in categories" :key="index" :value="item">{{ item }}</option>
         </select>
         <select v-if="nominations.length !== 0" name="nomination" v-model="nomination">
+            <option value="" selected disabled>Выберите номинацию</option>
             <option v-for="(item, index) in nominations" :key="index" :value="item">{{ item }}</option>
         </select>
     </div>
