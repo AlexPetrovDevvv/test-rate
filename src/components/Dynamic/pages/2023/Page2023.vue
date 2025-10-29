@@ -3,7 +3,7 @@
         <h2 class="year-sect__title">{{ title }}</h2>
         <div class="nomination__wrapper" v-if="pageStore.pageState.year !== '' && pageStore.pageState.pageTitle === 'Номинации' ">
             <nominations-menu :categoryList="categoryList" :nominationList="nominationsList" @nomination="requestNomination" @search="requestSearch"/>
-            <Nominations :categoryList="categoryList" :nominationList="nominationsList" v-if="table"/>
+            <Nominations :categoryList="categoryList" :nominationList="nominationsList" v-if="table" :magnifer="magnifer"/>
             <Search v-if="search"/>
         </div>
         <Survey v-if="pageStore.pageState.year !== '' && pageStore.pageState.pageTitle === 'Опрос' "/>
@@ -22,6 +22,14 @@ import { usePageStore } from '../../store/page'
 import NominationsMenu from '../../widgets/NominationsMenu/NominationsMenu.vue';
 import { useNominationsStore } from '../../widgets/Nominations/store/Nominations';
 import { useSearchStore } from '../../widgets/Search/store/Search';
+
+
+const props = defineProps({
+    magnifer: {
+        type: Boolean,
+        required: true
+    }
+})
 
 const nominationsStore = useNominationsStore()
 const searchStore = useSearchStore()

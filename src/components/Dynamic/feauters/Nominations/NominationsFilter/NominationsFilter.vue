@@ -37,6 +37,34 @@ const nominations = computed(() => {
 
 <style lang="sass">
 
+
+.paw-btn
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  width: 40px
+  height: 40px
+  font-size: 30px
+  border: none
+  border-radius: 8px
+
+  background: transparent
+  color: transparent
+  opacity: 0
+  transition: opacity .2s ease, background-color .2s ease, color .2s ease
+
+.dynamic-template_paw .paw-btn
+    &::after
+        content: ''
+    &:hover, &:focus-visible
+        opacity: 1
+        background: inherit
+        color: #fff
+    &:hover::after, &:focus-visible::after
+        content: ''
+
+
+
 .nominations-filter
     display: flex
     gap: 20px

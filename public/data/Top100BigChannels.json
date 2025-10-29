@@ -26,6 +26,7 @@
       "description": "КПо вопросам консультаций 👇",
       "subscribers": 147382,
       "engagement": 52.4,
+      "paw": "true",
       "citationIndex": 33.4
     },
     {
@@ -62,6 +63,7 @@
       "description": "Личный блог юриста",
       "subscribers": 61319,
       "engagement": 56,
+      "paw": "true",
       "citationIndex": 128
     },
     {
