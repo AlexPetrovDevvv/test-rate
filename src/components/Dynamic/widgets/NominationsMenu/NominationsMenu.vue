@@ -8,6 +8,7 @@
             <button class="nominations-menu__button" v-if="search === '' && table.category !== '' && table.nomination !== ''" @click="requestNomination">Запросить номинацию</button>
         </div>
     </div>
+
 </template>
 
 <script setup>

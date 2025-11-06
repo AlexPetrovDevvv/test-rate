@@ -1,41 +1,50 @@
 <template>
-    <section class="nominations" >
-        <div class="nomination" v-if="nominationsStore.NominationsFilterState.category !== '' && nominationsStore.NominationsFilterState.nomination !== ''">
-            <h3 class="nomination__title">{{ nominationsStore.NominationsFilterState.category }}: {{ nominationsStore.NominationsFilterState.nomination }}</h3>
-            <div class="nominations__description-wrapper" v-if="nominationsStore.content !== ''" v-html="nominationsStore.content"></div>
-            <nominations-table :title-list="nominationsStore.titleList" :value-list="nominationsStore.valueList" :title-value-list="nominationsStore.titleValueList" :magnifer="magnifer"/>
-            <button class="nomination__button" @click="nominationsStore.loadMoreItems" v-if="nominationsStore.hasMore">Загрузить еще</button>
-        </div>
-    </section>
+  <section class="nominations">
+    <div
+      class="nomination"
+      v-if="nominationsStore.NominationsFilterState.category !== '' && nominationsStore.NominationsFilterState.nomination !== ''"
+    >
+      <h3 class="nomination__title">
+        {{ nominationsStore.NominationsFilterState.category }}:
+        {{ nominationsStore.NominationsFilterState.nomination }}
+      </h3>
+
+      <div
+        class="nominations__description-wrapper"
+        v-if="nominationsStore.content !== ''"
+        v-html="nominationsStore.content"
+      ></div>
+
+      <nominations-table
+        :title-list="nominationsStore.titleList"
+        :value-list="nominationsStore.valueList"
+        :title-value-list="nominationsStore.titleValueList"
+        :magnifer="magnifer"
+        :show-paw="magnifer"
+      />
+
+      <button
+        class="nomination__button"
+        @click="nominationsStore.loadMoreItems"
+        v-if="nominationsStore.hasMore"
+      >
+        Загрузить еще
+      </button>
+    </div>
+  </section>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, toRef } from 'vue';
-import NominationsTable from '../../entities/Nominations/NominationsTable/nominationsTable.vue';
-import { useNominationsStore } from './store/Nominations.js';
-
-
-
-
+import NominationsTable from '../../entities/Nominations/NominationsTable/nominationsTable.vue'
+import { useNominationsStore } from './store/Nominations.js'
 
 const props = defineProps({
-    categoryList: {
-        type: Array,
-        required: true
-    },
-    nominationList: {
-        type: Array,
-        required: true
-    },
-    magnifer: {
-        type: Boolean,
-        required: true
-    }
+  categoryList: { type: Array, required: true },
+  nominationList: { type: Array, required: true },
+  magnifer: { type: Boolean, required: true }
 })
 
 const nominationsStore = useNominationsStore()
-
-
 </script>
 
 <style lang="sass">
